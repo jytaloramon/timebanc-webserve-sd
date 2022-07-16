@@ -42,7 +42,7 @@ O Timebanc-Webserve-SD é um serviço web para registro de eventos de funcinári
 
 |    ![alt](./imgs/Screenshot_2.png)     |
 | :------------------------------------: |
-| *[POST] api/employee/ - CONFLIT (401)* |
+| *[POST] api/employee/ - CONFLIT (409)* |
 
 |      ![alt](./imgs/Screenshot_3.png)      |
 | :---------------------------------------: |
