@@ -31,10 +31,21 @@ class ScheduleUseCases:
         schedule = self._repository.find_by_id(id)
 
         if schedule is None:
-            # Throw not found exception
-            pass
+            raise NotFoundError('Schedule ID not exist.')
 
         return schedule
+
+    def get_all_by_employee(self, id: int) -> List[Schedule]:
+
+        d = []
+        for i in self._repository.get_all_by_employee_id(id):
+            s = Schedule(i._moment, i._event_type, i._employee_id)
+            s._id = i._id
+            s._employee_id = Repositories.employee_repository.find_by_id(
+                s._employee_id).entity_dump()
+            d.append(s)
+
+        return d
 
     def create(self, moment: str, event_type: int, employee_id: int) -> Schedule:
 
@@ -49,7 +60,8 @@ class ScheduleUseCases:
 
         self._repository.create(schedule)
 
-        new_schedule = Schedule(schedule._moment, schedule._event_type, schedule._employee_id)
+        new_schedule = Schedule(
+            schedule._moment, schedule._event_type, schedule._employee_id)
         new_schedule._employee_id = employee.entity_dump()
 
         return new_schedule

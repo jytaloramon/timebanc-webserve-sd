@@ -1,1 +1,1 @@
-{"paramer": {"auto_increment": 3}, "data": {"1": {"id": 1, "name": "Ramon", "personalcode": "5556", "workcode": "31333", "birthdate": "1999-02-04"}, "2": {"id": 2, "name": "Ramon", "personalcode": "55556", "workcode": "321333", "birthdate": "1999-02-04"}}}
+{ "paramer": { "auto_increment": 1 }, "data": {} }

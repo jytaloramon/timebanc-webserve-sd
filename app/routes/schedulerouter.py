@@ -25,3 +25,10 @@ def schedule_base():
             ).entity_dump(), StatusCode.OK.value
         except NotFoundError as e:
             return {'msg': e.args[0]}, StatusCode.NOTFOUND.value
+
+
+@schedule_router.route('/<int:id>', methods=['GET'])
+def user_base_id(id: int):
+
+    if request.method == 'GET':
+        return {'schedules': list(map(lambda x: x.entity_dump(), schedule_use_case.get_all_by_employee(id)))}

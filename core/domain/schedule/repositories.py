@@ -35,6 +35,10 @@ class ScheduleRepository(RepositoryBase):
 
         return self._data.get(id)
 
+    def get_all_by_employee_id(self, employee_id: int) -> List[Schedule]:
+
+        return list(filter(lambda x: x._employee_id == employee_id, self._data.values()))
+
     def create(self, sched: Schedule) -> Schedule:
 
         sched._id = self.get_v_auto_increment()
