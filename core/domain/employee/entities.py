@@ -5,7 +5,7 @@ from build import Dict
 
 class Employee:
 
-    def __init__(self, name: str = '', personal_code: str = '', work_code: str = '', birth_date: date = datetime.now()) -> None:
+    def __init__(self, name: str = '', personal_code: str = '', work_code: str = '', birth_date: str = '') -> None:
 
         self._id = None
         self._name = name
