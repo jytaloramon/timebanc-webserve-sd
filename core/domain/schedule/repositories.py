@@ -1,4 +1,5 @@
-from typing import List
+from datetime import datetime
+from typing import Any, Dict, List, Tuple
 from core.commom.repository import RepositoryBase
 from core.domain.schedule.entities import Schedule
 
@@ -7,6 +8,24 @@ class ScheduleRepository(RepositoryBase):
 
     def __init__(self, dbfile_name: str) -> None:
         super().__init__(dbfile_name)
+
+    def _deserializable(self, data: dict[str, Any]) -> Any:
+
+        schedue = Schedule(
+            datetime.strptime(data['moment'], '%Y-%m-%d %H:%M:%S'),
+            data['event_type'],
+            data['employee_id']
+        )
+        schedue._id = data['id']
+
+        return schedue
+
+    def _serializable_to_save(self, data: Any) -> Tuple[int, Dict[str, any]]:
+
+        d = data.entity_dump()
+        d['moment'] = d['moment'].__str__()
+
+        return (data._id, d)
 
     def get_all(self) -> List[Schedule]:
 

@@ -1,6 +1,8 @@
 
 from datetime import datetime
 from typing import List
+from core.commom.exceptions import NotFoundError
+from core.commom.repositoriesinstance import Repositories
 from core.domain.schedule.entities import Schedule
 from core.domain.schedule.repositories import ScheduleRepository
 from core.domain.employee.entities import Employee
@@ -12,13 +14,13 @@ class ScheduleUseCases:
 
         self._repository = repository
 
-    def getAll(self) -> List[Schedule]:
+    def get_all(self) -> List[Schedule]:
 
-        return self._repository.getAll()
+        return self._repository.get_all()
 
-    def getById(self, id: int) -> Schedule:
+    def get_by_Id(self, id: int) -> Schedule:
 
-        schedule = self._repository.findById(id)
+        schedule = self._repository.find_by_id(id)
 
         if schedule is None:
             # Throw not found exception
@@ -28,11 +30,13 @@ class ScheduleUseCases:
 
     def create(self, moment: str, event_type: int, employee_id: int) -> Schedule:
 
-        employee = Employee()
-        employee._id = employee_id
+        employee = Repositories.employee_repository.find_by_id(employee_id)
 
-        moment_date = datetime.strptime(moment)
+        if employee is None:
+            raise NotFoundError('Employee ID not exist.')
 
-        employee = Schedule(moment_date, event_type, employee)
+        moment_date = datetime.strptime(moment, '%Y-%m-%d %H:%M')
+
+        employee = Schedule(moment_date, event_type, employee_id)
 
         return self._repository.create(employee)

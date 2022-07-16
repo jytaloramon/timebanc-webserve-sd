@@ -1,4 +1,3 @@
-from core.domain.employee.entities import Employee
 from core.domain.employee.repositories import EmployeeRepository
 from core.domain.schedule.repositories import ScheduleRepository
 
