@@ -17,29 +17,7 @@ class Employee:
         return {
             'id': self._id,
             'name': self._name,
-            'personalcode': self._personal_code,
-            'workcode': self._work_code,
-            'birthdate': self._birth_date
+            'personal_code': self._personal_code,
+            'work_code': self._work_code,
+            'birth_date': self._birth_date
         }
-
-    """
-    @property
-    def id(self) -> int:
-        return self._id
-
-    @property
-    def name(self) -> str:
-        return self._name
-
-    @property
-    def personal_code(self) -> str:
-        return self._personal_code
-
-    @property
-    def work_code(self) -> str:
-        return self._work_code
-
-    @property
-    def birth_date(self) -> date:
-        return self._birth_date
-    """

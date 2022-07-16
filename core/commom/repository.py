@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any, Dict, Tuple
 
 
 class RepositoryBase:
@@ -13,7 +13,22 @@ class RepositoryBase:
         filedb.close()
 
         self._v_auto_increment = data['paramer']['auto_increment']
-        self._data: Dict[int, Any] = data['data']
+        self._data: Dict[int, Any] = self._load_data(data['data'])
+
+    def _deserializable(self, data: dict[str, Any]) -> Any:
+        pass
+
+    def _serializable_to_save(self, data: Any) -> Tuple[int, Dict[str, any]]:
+        pass
+
+    def _load_data(self, data_json: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
+
+        data = dict(
+            map(lambda x: (int(x[0]), self._deserializable(
+                x[1])), data_json.items())
+        )
+
+        return data
 
     def get_v_auto_increment(self) -> int:
 
@@ -24,7 +39,7 @@ class RepositoryBase:
     def update_db(self) -> None:
 
         data_save = dict(
-            map(lambda x: (x[0], x[1].entity_dump()), self._data.items()))
+            map(lambda x: self._serializable_to_save(x), self._data.values()))
 
         filedb = open(self._dbfile_name, 'w+')
         filedb.write(json.dumps({

@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any, Dict, List, Tuple
 from core.commom.repository import RepositoryBase
 from core.domain.employee.entities import Employee
 
@@ -7,6 +7,18 @@ class EmployeeRepository(RepositoryBase):
 
     def __init__(self, dbfile_name: str) -> None:
         super().__init__(dbfile_name)
+
+    def _deserializable(self, data: dict[str, Any]) -> Any:
+
+        employee = Employee(
+            data['name'], data['personal_code'], data['work_code'], data['birth_date'])
+        employee._id = data['id']
+
+        return employee
+
+    def _serializable_to_save(self, data: Any) -> Tuple[int, Dict[str, any]]:
+
+        return (data._id, data.entity_dump())
 
     def get_all(self) -> List[Employee]:
         return list(self._data.values())
