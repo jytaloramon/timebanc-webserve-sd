@@ -5,8 +5,8 @@ from core.domain.employee.entities import Employee
 
 class EmployeeRepository(RepositoryBase):
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, dbfile_name: str) -> None:
+        super().__init__(dbfile_name)
 
     def get_all(self) -> List[Employee]:
         return list(self._data.values())
@@ -32,6 +32,6 @@ class EmployeeRepository(RepositoryBase):
     def create(self, emp: Employee) -> Employee:
 
         emp._id = self.get_v_auto_increment()
-        self._data[emp._id] = emp
+        self.set_new_data(emp._id, emp)
 
         return emp
