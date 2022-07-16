@@ -32,3 +32,34 @@ O Timebanc-Webserve-SD é um serviço web para registro de eventos de funcinári
 3. Execute: *# python main.py*
 4. Endereço de acesso: <http://localhost:5000>
 5. Export o arquivo *endpoints.json* em algum software de teste de API - Insomnia, Postman, Thunder Client (VSCode extension) - para ter acesso a todos os endpoint e os formatos de requisição. 
+
+## Execução (Screenshots)
+
+
+|    ![alt](./imgs/Screenshot_1.png)     |
+| :------------------------------------: |
+| *[POST] api/employee/ - CREATED (201)* |
+
+|    ![alt](./imgs/Screenshot_2.png)     |
+| :------------------------------------: |
+| *[POST] api/employee/ - CONFLIT (401)* |
+
+|      ![alt](./imgs/Screenshot_3.png)      |
+| :---------------------------------------: |
+| *[GET] api/employee/2 {por id}- OK (200)* |
+
+| ![alt](./imgs/Screenshot_4.png)  |
+| :------------------------------: |
+| *[GET] api/employee/ - OK (200)* |
+
+|    ![alt](./imgs/Screenshot_5.png)     |
+| :------------------------------------: |
+| *[POST] api/schedule/ - CREATED (201)* |
+
+| ![alt](./imgs/Screenshot_6.png)  |
+| :------------------------------: |
+| *[GET] api/schedule/ - OK (200)* |
+
+|          ![alt](./imgs/Screenshot_7.png)           |
+| :------------------------------------------------: |
+| *[GET] api/schedule/2 {por employee id}- OK (200)* |
