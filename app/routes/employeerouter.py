@@ -22,7 +22,7 @@ def user_base():
         try:
             return employee_use_case.create(
                 data['name'], data['personal_code'], data['work_code'], data['birth_date']
-            ).entity_dump()
+            ).entity_dump(), StatusCode.CREATED.value
         except Conflit as e:
             return {'msg': e.args[0]}, StatusCode.CONFLIT.value
 
@@ -33,6 +33,6 @@ def user_base_id(id: int):
     if request.method == 'GET':
 
         try:
-            return employee_use_case.get_by_Id(id).entity_dump()
+            return employee_use_case.get_by_Id(id).entity_dump(), StatusCode.OK.value
         except NotFoundError as e:
             return {'msg': e.args[0]}, StatusCode.NOTFOUND.value

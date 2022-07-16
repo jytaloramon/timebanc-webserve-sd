@@ -1,6 +1,6 @@
 
 from datetime import datetime
-from typing import List
+from typing import List, Tuple
 from core.commom.exceptions import NotFoundError
 from core.commom.repositoriesinstance import Repositories
 from core.domain.schedule.entities import Schedule
@@ -35,17 +35,15 @@ class ScheduleUseCases:
 
         return schedule
 
-    def get_all_by_employee(self, id: int) -> List[Schedule]:
+    def get_all_by_employee(self, id: int) -> Tuple[Employee, List[Schedule]]:
 
         d = []
         for i in self._repository.get_all_by_employee_id(id):
             s = Schedule(i._moment, i._event_type, i._employee_id)
             s._id = i._id
-            s._employee_id = Repositories.employee_repository.find_by_id(
-                s._employee_id).entity_dump()
             d.append(s)
 
-        return d
+        return Repositories.employee_repository.find_by_id(id),  d
 
     def create(self, moment: str, event_type: int, employee_id: int) -> Schedule:
 

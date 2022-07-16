@@ -22,7 +22,7 @@ def schedule_base():
         try:
             return schedule_use_case.create(
                 data['moment'], data['event_type'], data['employee_id']
-            ).entity_dump(), StatusCode.OK.value
+            ).entity_dump(), StatusCode.CREATED.value
         except NotFoundError as e:
             return {'msg': e.args[0]}, StatusCode.NOTFOUND.value
 
@@ -31,4 +31,6 @@ def schedule_base():
 def user_base_id(id: int):
 
     if request.method == 'GET':
-        return {'schedules': list(map(lambda x: x.entity_dump(), schedule_use_case.get_all_by_employee(id)))}
+        employee, d = schedule_use_case.get_all_by_employee(id)
+
+        return {'employee': employee.entity_dump(), 'schedules': list(map(lambda x: x.entity_dump(), d))}, StatusCode.OK.value
