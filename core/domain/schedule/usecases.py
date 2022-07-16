@@ -16,7 +16,15 @@ class ScheduleUseCases:
 
     def get_all(self) -> List[Schedule]:
 
-        return self._repository.get_all()
+        d = []
+        for i in self._repository.get_all():
+            s = Schedule(i._moment, i._event_type, i._employee_id)
+            s._id = i._id
+            s._employee_id = Repositories.employee_repository.find_by_id(
+                s._employee_id).entity_dump()
+            d.append(s)
+
+        return d
 
     def get_by_Id(self, id: int) -> Schedule:
 
@@ -37,6 +45,11 @@ class ScheduleUseCases:
 
         moment_date = datetime.strptime(moment, '%Y-%m-%d %H:%M')
 
-        employee = Schedule(moment_date, event_type, employee_id)
+        schedule = Schedule(moment_date, event_type, employee_id)
 
-        return self._repository.create(employee)
+        self._repository.create(schedule)
+
+        new_schedule = Schedule(schedule._moment, schedule._event_type, schedule._employee_id)
+        new_schedule._employee_id = employee.entity_dump()
+
+        return new_schedule
